@@ -29,8 +29,8 @@ class doh_session(requests.Session):
             del kwargs['headers']
         else:
             new_headers = {'Host': urlc.hostname}
-        print(new_url)
-        print(new_headers)
+        #print(new_url)
+        #print(new_headers)
         return super().request(method, new_url, headers = new_headers, **kwargs)
 
 

@@ -1,8 +1,9 @@
 
-import requests_cache
+#import requests_cache
 import datetime
 import time
-import requests
+#import requests
+import dohresolver
 import collections
 import random
 import re
@@ -10,11 +11,12 @@ import os
 import urllib
 
 def get_json(url):
-    requests_cache.install_cache('zzz_cache', expire_after=datetime.timedelta(hours=12))
-    start = time.time()
-    data = requests.get(url).json()
-    print('Got API in {} seconds.'.format(time.time() - start))
-    requests_cache.uninstall_cache()
+    #requests_cache.install_cache('zzz_cache', expire_after=datetime.timedelta(hours=12))
+    #start = time.time()
+    #data = requests.get(url).json()
+    #print('Got API in {} seconds.'.format(time.time() - start))
+    #requests_cache.uninstall_cache()
+    data = dohresolver.doh_session().get(url).json()
     return data
 
 def split_data(data, by='bonusGroup'):
