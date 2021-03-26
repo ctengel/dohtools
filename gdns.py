@@ -13,7 +13,9 @@ hosts = list(set(hosts))
 # build a dictionary of IP to hosts
 out = collections.defaultdict(list)
 for i in hosts:
-    out[dohresolver.doh_resolve(i)].append(i)
+    trier = dohresolver.doh_resolve(i)
+    if trier:
+        out[dohresolver.doh_resolve(i)].append(i)
 
 # output
 for k, v in out.items():

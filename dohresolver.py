@@ -1,13 +1,16 @@
 import requests
 from urllib.parse import urlsplit, urlunsplit
 
-DOHRESOLVER = 'https://1.1.1.1/dns-query' # this is cloudflare-dns.com; also can use https://dns.google.com/resolve
+DOHRESOLVER = 'https://9.9.9.9:5053/dns-query' # this is quad9; also can use https://dns.google.com/resolve or cloudflare-dns.com (1.1.1.1:443)
 
 def doh_resolve(host):
     rtis = requests.get(DOHRESOLVER, params={'name': host, 'type': 'A'}, headers={'accept': 'application/dns-json'})
     rtis.raise_for_status()
     tis = rtis.json()
-    return tis['Answer'][-1]['data']
+    if 'Answer' in tis:
+        return tis['Answer'][-1]['data']
+    else:
+        return None
 
 
 class doh_session(requests.Session):
